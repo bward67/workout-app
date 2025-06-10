@@ -1,10 +1,7 @@
 import React, { useState } from "react";
+import data from "../motivation.js";
 
 const Footer = () => {
-  const [motivationalQuote, setMotivationalQuote] = useState(
-    "Close your eyes & imagine yourself struttin' your stuff in your new firm fit fabulous body!"
-  );
-
   //   function handleClickFooter() {
   //     fetch("https://api.quotable.io/random")
   //       .then((res) => res.json())
@@ -14,18 +11,16 @@ const Footer = () => {
   //         setMotivationalQuote("Failed to load quote.");
   //       });
   //   }
-  function handleClickFooter() {
-    setMotivationalQuote("Only YOU have the power to sculpt your body!");
-  }
+
+  const randomIndex = Math.floor(Math.random() * data.length);
+  const randomItem = data[randomIndex];
 
   return (
     <>
       <div className="footer-container">
         <div className="footer-top">
-          <button className="footer-btn" onClick={handleClickFooter}>
-            Click if you would like a Motivational Quote:
-          </button>
-          <h3>"{motivationalQuote}"</h3>
+          {/* <h3>"{motivationalQuote}"</h3> */}
+          <h3>{randomItem}</h3>
         </div>
       </div>
       <h6>Thanks to: https://weighttraining.guide for the images.</h6>

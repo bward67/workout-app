@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import InterestingThings from "./InterestingThings";
 
 const Saturday = () => {
   const [fun, setFun] = useState("");
@@ -60,6 +61,7 @@ const Saturday = () => {
       <h1>Soothing Saturday!</h1>
       <h2 className="sat-message">Go on and enjoy a well deserved day off.</h2>
       <h2 className="sat-message">You have been working hard! 😊</h2>
+
       <form onSubmit={handleSubmit}>
         <label>
           What are you planning to do today?
@@ -72,7 +74,7 @@ const Saturday = () => {
           />
         </label>
       </form>
-      <data value=""></data>
+      {/* <data value=""></data> */}
       {message && (
         <h2
           key={animationKey}
@@ -83,6 +85,7 @@ const Saturday = () => {
           "{message}" DOES sound like fun. Enjoy every second!
         </h2>
       )}
+      <InterestingThings />
     </div>
   );
 };

@@ -127,268 +127,283 @@ const Tuesday = () => {
       <h1>Transformation Tuesday!</h1>
       <h2>Biceps, Triceps & Shoulders</h2>
 
-      <form>
-        <div className="exercise-container">
+      <div className="exercise-container">
+        <div className="exercise-content-container">
           <h3>
             Biceps: <span>Concentration Curl</span>
           </h3>
+          <p>
+            Look at your bicep muscle bulge as you squeeze the dumbbell. If you
+            notice you are having to use your back to lift then that weight is
+            too heavy. It is better to lift a bit lighter weight and get perfect
+            form.
+          </p>
+          <div className="input-btn-container">
+            <label htmlFor="biWeights">Weights:</label>
+            <input
+              type="text"
+              placeholder="ex. 5kg"
+              name="biWeights"
+              value={formData.biWeights}
+              onChange={handleChange}
+              id="biWeights"
+            />
+          </div>
+          <button
+            type="button"
+            className="save-to-progress-history-button"
+            onClick={handleUpdateBiWeights}
+          >
+            Save to Progress History
+          </button>
 
           <div className="input-btn-container">
-            <label>
-              <input
-                type="text"
-                placeholder="weights amount in kg"
-                name="biWeights"
-                value={formData.biWeights}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              type="button"
-              className="form-button"
-              onClick={handleUpdateBiWeights}
-            >
-              Update
-            </button>
+            <label htmlFor="biReps">Reps:</label>
+            <input
+              type="text"
+              placeholder="ex. 3 sets of 12"
+              name="biReps"
+              value={formData.biReps}
+              onChange={handleChange}
+              id="biReps"
+            />
           </div>
-
-          <p>{`Weights: ${savedTuesBiWeights}`}</p>
-
-          <div className="input-btn-container">
-            <label>
-              <input
-                type="text"
-                placeholder="number of sets & reps"
-                name="biReps"
-                value={formData.biReps}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              type="button"
-              className="form-button"
-              onClick={handleUpdateBiReps}
-            >
-              Update
-            </button>
-          </div>
-          <p>{`Reps: ${savedTuesBiReps}`}</p>
+          <button
+            type="button"
+            className="save-to-progress-history-button"
+            onClick={handleUpdateBiReps}
+          >
+            Save to Progress History
+          </button>
         </div>
         <img
           className="exercise-img"
           src="https://cdn-0.weighttraining.guide/wp-content/uploads/2016/05/Dumbbell-Concentration-Curl-resized.png"
           alt="person performing the concentration dumbbell curl which shows which muscles are being used"
         />
-      </form>
+      </div>
 
-      <form>
-        <div className="exercise-container">
+      <div className="exercise-container">
+        <div className="exercise-content-container">
           <h3>
             Triceps: <span>Kickbacks</span>
           </h3>
+          <p>
+            No bingo wings in sight. These kickbacks will firm you up in no
+            time. Keep presevering!
+          </p>
 
           <div className="input-btn-container">
-            <label>
-              <input
-                type="text"
-                placeholder="weights amount in kg"
-                name="triWeights"
-                value={formData.triWeights}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleUpdateTriWeights}
-            >
-              Update
-            </button>
+            <label htmlFor="triWeights">Weights:</label>
+            <input
+              type="text"
+              placeholder="ex. 3.5kg"
+              name="triWeights"
+              value={formData.triWeights}
+              onChange={handleChange}
+              id="triWeights"
+            />
           </div>
-          <p>{`Weights: ${savedTuesTriWeights}`} </p>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleUpdateTriWeights}
+          >
+            Save to Progress History
+          </button>
 
           <div className="input-btn-container">
-            <label>
-              <input
-                type="text"
-                placeholder="number of sets & reps"
-                name="triReps"
-                value={formData.triReps}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleUpdateTriReps}
-            >
-              Update
-            </button>
+            <label htmlFor="triReps">Reps:</label>
+            <input
+              type="text"
+              placeholder="ex. 3 sets of 12"
+              name="triReps"
+              value={formData.triReps}
+              onChange={handleChange}
+              id="triReps"
+            />
           </div>
-          <p>{`Reps: ${savedTuesTriReps}`}</p>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleUpdateTriReps}
+          >
+            Save to Progress History
+          </button>
         </div>
         <img
           className="exercise-img"
           src="https://cdn-0.weighttraining.guide/wp-content/uploads/2016/05/Dumbbell-Kickback-resized.png"
           alt="person performing the dumbbell kickback which shows which muscles are being used"
         />
-      </form>
+      </div>
 
-      <form>
-        <div className="exercise-container">
+      <div className="exercise-container">
+        <div className="exercise-content-container">
           <h3>
             Shoulders: <span>Lateral Raises</span>
           </h3>
+          <p>
+            Again, make sure the weight you are lifting is not too heavy that
+            you must engage your back to help. Just focus on the shoulders.
+          </p>
           <div className="input-btn-container">
-            <label>
-              <input
-                type="text"
-                placeholder="weights amount in kg"
-                name="lateralShoulderWeights"
-                value={formData.lateralShoulderWeights}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleUpdateLateralShoulderWeights}
-            >
-              Update
-            </button>
+            <label htmlFor="lateralShoulderWeights">Weights:</label>
+            <input
+              type="text"
+              placeholder="ex. 2.5g"
+              name="lateralShoulderWeights"
+              value={formData.lateralShoulderWeights}
+              onChange={handleChange}
+              id="lateralShoulderWeights"
+            />
           </div>
-          <p>{`Weights: ${savedTuesLateralShoulderWeights}`}</p>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleUpdateLateralShoulderWeights}
+          >
+            Save to Progress History
+          </button>
 
           <div className="input-btn-container">
-            <label>
-              <input
-                type="text"
-                placeholder="number of sets & reps"
-                name="lateralShoulderReps"
-                value={formData.lateralShoulderReps}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleUpdateLateralShoulderReps}
-            >
-              Update
-            </button>
+            <label htmlFor="lateralShoulderReps">Reps:</label>
+            <input
+              type="text"
+              placeholder="ex. 3 sets of 10"
+              name="lateralShoulderReps"
+              value={formData.lateralShoulderReps}
+              onChange={handleChange}
+              id="lateralShoulderReps"
+            />
           </div>
-          <p>{`Reps: ${savedTuesLateralShoulderReps}`}</p>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleUpdateLateralShoulderReps}
+          >
+            Save to Progress History
+          </button>
         </div>
         <img
           className="exercise-img"
           src="https://cdn-0.weighttraining.guide/wp-content/uploads/2016/05/dumbbell-lateral-raise-resized.png"
           alt="person performing the dumbbell lateral raise which shows which muscles are being used"
         />
-      </form>
+      </div>
 
-      <form>
-        <div className="exercise-container">
+      <div className="exercise-container">
+        <div className="exercise-content-container">
           <h3>
             Shoulders: <span>Front Raises</span>
           </h3>
+          <p>
+            You can perform this exercise sitting or standing whichever you
+            prefer. Notice you begin with the dumbbells at your sides and you
+            give them a little twist as you go up.
+          </p>
           <div className="input-btn-container">
-            <label>
-              <input
-                type="text"
-                placeholder="weights amount in kg"
-                name="frontShoulderWeights"
-                value={formData.frontShoulderWeights}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleUpdateFrontShoulderWeights}
-            >
-              Update
-            </button>
+            <label htmlFor="frontShoulderWeights">Weights:</label>
+            <input
+              type="text"
+              placeholder="ex. 2.5kg"
+              name="frontShoulderWeights"
+              value={formData.frontShoulderWeights}
+              onChange={handleChange}
+              id="frontShoulderWeights"
+            />
           </div>
-          <p>{`Weights: ${savedTuesFrontShoulderWeights}`}</p>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleUpdateFrontShoulderWeights}
+          >
+            Save to Progress History
+          </button>
 
           <div className="input-btn-container">
-            <label>
-              <input
-                type="text"
-                placeholder="number of sets & reps"
-                name="frontShoulderReps"
-                value={formData.frontShoulderReps}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleUpdateFrontShoulderReps}
-            >
-              Update
-            </button>
+            <label htmlFor="frontShoulderReps">Reps:</label>
+            <input
+              type="text"
+              placeholder="ex. 3 sets of 12"
+              name="frontShoulderReps"
+              value={formData.frontShoulderReps}
+              onChange={handleChange}
+              id="frontShoulderReps"
+            />
           </div>
-          <p>{`Reps: ${savedTuesFrontShoulderReps}`}</p>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleUpdateFrontShoulderReps}
+          >
+            Save to Progress History
+          </button>
         </div>
         <img
           className="exercise-img"
           src="https://cdn-0.weighttraining.guide/wp-content/uploads/2017/08/Seated-Dumbbell-Front-Raise-resized.png"
           alt="person performing the seated dumbbell front raise which shows which muscles are being used"
         />
-      </form>
+      </div>
 
-      <form>
-        <div className="exercise-container">
+      <div className="exercise-container">
+        <div className="exercise-content-container">
           <h3>
             Shoulders: <span>Arnold Press</span>
           </h3>
+          <p>
+            This one has a little twist as you go up as well. Notice how you
+            begin with your palms facing toward you and end up with the facing
+            away from you.
+          </p>
           <div className="input-btn-container">
-            <label>
-              <input
-                type="text"
-                placeholder="weights amount in kg"
-                name="shoulderArnoldWeights"
-                value={formData.shoulderArnoldWeights}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleUpdateShoulderArnoldWeights}
-            >
-              Update
-            </button>
+            <label htmlFor="shoulderArnoldWeights">Weights:</label>
+            <input
+              type="text"
+              placeholder="ex. 5kg"
+              name="shoulderArnoldWeights"
+              value={formData.shoulderArnoldWeights}
+              onChange={handleChange}
+              id="shoulderArnoldWeights"
+            />
           </div>
-          <p>{`Weights: ${savedTuesShoulderArnoldWeights}`} </p>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleUpdateShoulderArnoldWeights}
+          >
+            Save to Progress History
+          </button>
 
           <div className="input-btn-container">
-            <label>
-              <input
-                type="text"
-                placeholder="number of sets & reps"
-                name="shoulderArnoldReps"
-                value={formData.shoulderArnoldReps}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleUpdateShoulderArnoldReps}
-            >
-              Update
-            </button>
+            <label htmlFor="shoulderArnoldReps">Reps:</label>
+            <input
+              type="text"
+              placeholder="ex. 3 sets of 12"
+              name="shoulderArnoldReps"
+              value={formData.shoulderArnoldReps}
+              onChange={handleChange}
+              id="shoulderArnoldReps"
+            />
           </div>
-          <p>{`Reps: ${savedTuesShoulderArnoldReps}`} </p>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleUpdateShoulderArnoldReps}
+          >
+            Save to Progress History
+          </button>
         </div>
         <img
           className="exercise-img"
           src="https://cdn-0.weighttraining.guide/wp-content/uploads/2016/10/Arnold-press-resized.png"
           alt="person performing the Arnold press exercise which shows which muscles are being used"
         />
-      </form>
+      </div>
+      <button className="check-progress-history-button">
+        Check Progress History
+      </button>
     </div>
   );
 };

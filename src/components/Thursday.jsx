@@ -54,112 +54,115 @@ const Thursday = () => {
   return (
     <div className="weekday-component-container">
       <h1>Thunder Thursday!</h1>
-      <h2>Today is Chest and Back day</h2>
+      <h2>Chest & Back</h2>
 
-      <form>
-        <div className="exercise-container">
+      <div className="exercise-container">
+        <div className="exercise-content-container">
           <h3>
             Chest: <span>Flyes</span>
           </h3>
-          {/* another good exercise is the Dumbbell face pulls */}
+          <p>Feel the burn!</p>
           <div className="input-btn-container">
-            <label>
-              <input
-                type="text"
-                placeholder="weights amount in kg"
-                name="chestWeights"
-                value={formData.chestWeights}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleUpdateChestWeights}
-            >
-              Update
-            </button>
+            <label htmlFor="chestWeights">Weights:</label>
+            <input
+              type="text"
+              placeholder="ex. 5kg"
+              name="chestWeights"
+              value={formData.chestWeights}
+              onChange={handleChange}
+              id="chestWeights"
+            />
           </div>
-          <p>{`Weights: ${savedThursChestWeights}`} </p>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleUpdateChestWeights}
+          >
+            Save to Progress History
+          </button>
 
           <div className="input-btn-container">
-            <label>
-              <input
-                type="text"
-                placeholder="number of sets & reps"
-                name="chestReps"
-                value={formData.chestReps}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleUpdateChestReps}
-            >
-              Update
-            </button>
+            <label htmlFor="chestReps">Reps:</label>
+            <input
+              type="text"
+              placeholder="ex. 3 sets of 12"
+              name="chestReps"
+              value={formData.chestReps}
+              onChange={handleChange}
+              id="chestReps"
+            />
           </div>
-          <p>{`Reps: ${savedThursChestReps}`} </p>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleUpdateChestReps}
+          >
+            Save to Progress History
+          </button>
         </div>
         <img
           className="exercise-img"
           src="https://cdn-0.weighttraining.guide/wp-content/uploads/2016/11/dumbbell-fly-resized.png"
           alt="person performing the dumbbell fly which shows which muscles are being used"
         />
-      </form>
+      </div>
 
-      <form>
-        <div className="exercise-container">
+      <div className="exercise-container">
+        <div className="exercise-content-container">
           <h3>
             Back: <span>Bent-Over Reverse Flyes</span>
           </h3>
+          <p>
+            You can also perform this excercise while lying prone on a bench.
+            Think about your back muscles as you squeeze up.
+          </p>
           <div className="input-btn-container">
-            <label>
-              <input
-                type="text"
-                placeholder="weights amount in kg"
-                name="backWeights"
-                value={formData.backWeights}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleUpdateBackWeights}
-            >
-              Update
-            </button>
+            <label htmlFor="backWeights">Weights:</label>
+            <input
+              type="text"
+              placeholder="ex. 8kg"
+              name="backWeights"
+              value={formData.backWeights}
+              onChange={handleChange}
+              id="backWeights"
+            />
           </div>
-          <p>{`Weights: ${savedThursBackWeights}`} </p>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleUpdateBackWeights}
+          >
+            Save to Progress History
+          </button>
 
           <div className="input-btn-container">
-            <label>
-              <input
-                type="text"
-                placeholder="number of sets & reps"
-                name="backReps"
-                value={formData.backReps}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleUpdateBackReps}
-            >
-              Update
-            </button>
+            <label htmlFor="backReps">Reps:</label>
+            <input
+              type="text"
+              placeholder="ex. 3 sets of 12"
+              name="backReps"
+              value={formData.backReps}
+              onChange={handleChange}
+              id="backReps"
+            />
           </div>
-          <p>{`Reps: ${savedThursBackReps}`} </p>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleUpdateBackReps}
+          >
+            Save to Progress History
+          </button>
         </div>
         <img
           className="exercise-img"
           src="https://weighttraining.guide/wp-content/uploads/2016/05/Dumbbell-Rear-Lateral-Raise-resized.png"
           alt="person performing the bent-over dumbbell reverse fly which shows which muscles are being used"
         />
-      </form>
+      </div>
+      <button className="check-progress-history-button">
+        Check Progress History
+      </button>
     </div>
   );
 };

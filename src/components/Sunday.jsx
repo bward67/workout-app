@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import ThingToKnow from "./InterestingThings";
+import { TbTrashXFilled } from "react-icons/tb";
 
 const Sunday = () => {
-  const [formData, setFormData] = useState({
+  const [inputData, setInputData] = useState({
     squatWeights: "",
     squatReps: "",
     hipThrustWeights: "",
@@ -76,12 +78,12 @@ const Sunday = () => {
         "",
     };
 
-    setFormData(savedData);
+    setInputData(savedData);
   }, []);
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setInputData((prev) => ({ ...prev, [name]: value }));
 
     // Save to localStorage right away
     const newEntry = { value, updatedAt: new Date().toISOString() };
@@ -125,11 +127,11 @@ const Sunday = () => {
   //? we can get the timestamp of when the user clicked the button and save it to localStorage - which we can then retrieve later
   function handleSquatWeights() {
     //!  but if newEntry is "" don't push it
-    const squatWeights = formData.squatWeights.trim();
+    const squatWeights = inputData.squatWeights.trim();
     if (squatWeights === "") return;
     const timestamp = new Date().toISOString();
     //console.log(timestamp);
-    const newEntry = { value: formData.squatWeights, updatedAt: timestamp };
+    const newEntry = { value: inputData.squatWeights, updatedAt: timestamp };
     //Store in history
     const history =
       JSON.parse(localStorage.getItem("sunSquatWeightsHistory")) || [];
@@ -141,15 +143,15 @@ const Sunday = () => {
 
     //Store lastest
     localStorage.setItem("savedSunBSquatWeights", JSON.stringify(newEntry));
-    setSavedSunBSquatWeights(formData.squatWeights);
+    setSavedSunBSquatWeights(inputData.squatWeights);
     // setFormData((prev) => ({ ...prev, squatWeights: "" }));
   }
 
   function handleSquatReps() {
-    const squatReps = formData.squatReps.trim();
+    const squatReps = inputData.squatReps.trim();
     if (squatReps === "") return;
     const timestamp = new Date().toISOString();
-    const newEntry = { value: formData.squatReps, updatedAt: timestamp };
+    const newEntry = { value: inputData.squatReps, updatedAt: timestamp };
 
     //Store in history
     const history =
@@ -159,16 +161,16 @@ const Sunday = () => {
 
     //Store latest
     localStorage.setItem("savedSunBSquatReps", JSON.stringify(newEntry));
-    setSavedSunBSquatReps(formData.squatReps);
+    setSavedSunBSquatReps(inputData.squatReps);
     // setFormData((prev) => ({ ...prev, squatReps: "" }));
   }
 
   function handleHipThrustWeights() {
-    const hipThrustWeights = formData.hipThrustWeights.trim();
+    const hipThrustWeights = inputData.hipThrustWeights.trim();
     if (hipThrustWeights === "") return;
     const timestamp = new Date().toISOString();
     const newEntry = {
-      value: formData.hipThrustWeights,
+      value: inputData.hipThrustWeights,
       updatedAt: timestamp,
     };
     //Store in history
@@ -179,15 +181,15 @@ const Sunday = () => {
 
     //Store latest
     localStorage.setItem("savedSunHipThrustWeights", JSON.stringify(newEntry));
-    setSavedSunHipThrustWeights(formData.hipThrustWeights);
-    setFormData((prev) => ({ ...prev, hipThrustWeights: "" }));
+    setSavedSunHipThrustWeights(inputData.hipThrustWeights);
+    setInputData((prev) => ({ ...prev, hipThrustWeights: "" }));
   }
 
   function handleHipThrustReps() {
-    const hipThrustReps = formData.hipThrustReps.trim();
+    const hipThrustReps = inputData.hipThrustReps.trim();
     if (hipThrustReps === "") return;
     const timestamp = new Date().toISOString();
-    const newEntry = { value: formData.hipThrustReps, updatedAt: timestamp };
+    const newEntry = { value: inputData.hipThrustReps, updatedAt: timestamp };
 
     //Store in history
     const history =
@@ -197,15 +199,15 @@ const Sunday = () => {
 
     //Store latest
     localStorage.setItem("savedSunHipThrustReps", JSON.stringify(newEntry));
-    setSavedSunHipThrustReps(formData.hipThrustReps);
-    setFormData((prev) => ({ ...prev, hipThrustReps: "" }));
+    setSavedSunHipThrustReps(inputData.hipThrustReps);
+    setInputData((prev) => ({ ...prev, hipThrustReps: "" }));
   }
 
   function handleCrunchAbs() {
-    const crunchAbsReps = formData.crunchAbsReps.trim();
+    const crunchAbsReps = inputData.crunchAbsReps.trim();
     if (crunchAbsReps === "") return;
     const timestamp = new Date().toISOString();
-    const newEntry = { value: formData.crunchAbsReps, updatedAt: timestamp };
+    const newEntry = { value: inputData.crunchAbsReps, updatedAt: timestamp };
 
     //Store in history
     const history =
@@ -215,15 +217,15 @@ const Sunday = () => {
 
     //Store latest
     localStorage.setItem("savedSunCrunchAbsReps", JSON.stringify(newEntry));
-    setSavedSunCrunchAbsReps(formData.crunchAbsReps);
-    setFormData((prev) => ({ ...prev, crunchAbsReps: "" }));
+    setSavedSunCrunchAbsReps(inputData.crunchAbsReps);
+    setInputData((prev) => ({ ...prev, crunchAbsReps: "" }));
   }
 
   function handleKneeTuckAbs() {
-    const kneeTuckAbsReps = formData.kneeTuckAbsReps.trim();
+    const kneeTuckAbsReps = inputData.kneeTuckAbsReps.trim();
     if (kneeTuckAbsReps === "") return;
     const timestamp = new Date().toISOString();
-    const newEntry = { value: formData.kneeTuckAbsReps, updatedAt: timestamp };
+    const newEntry = { value: inputData.kneeTuckAbsReps, updatedAt: timestamp };
 
     //Store in history
     const history =
@@ -233,16 +235,16 @@ const Sunday = () => {
 
     //Store latest
     localStorage.setItem("savedSunKneeTuckAbsReps", JSON.stringify(newEntry));
-    setSavedSunKneeTuckAbsReps(formData.kneeTuckAbsReps);
-    setFormData((prev) => ({ ...prev, kneeTuckAbsReps: "" }));
+    setSavedSunKneeTuckAbsReps(inputData.kneeTuckAbsReps);
+    setInputData((prev) => ({ ...prev, kneeTuckAbsReps: "" }));
   }
 
   function handleScissorKickAbs() {
-    const scissorKickAbsReps = formData.scissorKickAbsReps.trim();
+    const scissorKickAbsReps = inputData.scissorKickAbsReps.trim();
     if (scissorKickAbsReps === "") return;
     const timestamp = new Date().toISOString();
     const newEntry = {
-      value: formData.scissorKickAbsReps,
+      value: inputData.scissorKickAbsReps,
       updatedAt: timestamp,
     };
 
@@ -260,8 +262,8 @@ const Sunday = () => {
       "savedSunScissorKickAbsReps",
       JSON.stringify(newEntry)
     );
-    setSavedSunScissorKickAbsReps(formData.scissorKickAbsReps);
-    setFormData((prev) => ({ ...prev, scissorKickAbsReps: "" }));
+    setSavedSunScissorKickAbsReps(inputData.scissorKickAbsReps);
+    setInputData((prev) => ({ ...prev, scissorKickAbsReps: "" }));
   }
 
   function formatDate(isoString) {
@@ -273,6 +275,7 @@ const Sunday = () => {
     return `${day}/${month}/${year}`;
   }
 
+  //! BUT lets set this up to Toggle on and off
   function handleCheckProgress() {
     const sunSquatWeightsHistory =
       JSON.parse(localStorage.getItem("sunSquatWeightsHistory")) || [];
@@ -315,136 +318,144 @@ const Sunday = () => {
     <div className="weekday-component-container">
       <h1>Super Strength Sunday!</h1>
       <h2>Legs, Glutes & Abs</h2>
-
-      <form>
-        <div className="exercise-container">
+      <ThingToKnow />
+      <div className="exercise-container">
+        <div className="exercise-content-container">
           <h3>
-            LEgs & Glutes: <span>Bulgarian Split Squats</span>
+            Legs & Glutes: <span>Bulgarian Split Squats</span>
           </h3>
-          <div>
-            <label>
-              <input
-                type="text"
-                placeholder="weight amount in kgs"
-                name="squatWeights"
-                value={formData.squatWeights}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleSquatWeights}
-            >
-              Update
-            </button>
-          </div>
-          <p>{`Weights: ${savedSunBSquatWeights}`}</p>
+          <p>
+            Those Bulgarians showed no mercy when they invented this exercise!
+            Push up through your heel. You will feel it.
+          </p>
 
-          <div>
-            <label>
-              <input
-                type="text"
-                placeholder="number of sets & reps"
-                name="squatReps"
-                value={formData.squatReps}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              type="button"
-              onClick={handleSquatReps}
-              className="form-button"
-            >
-              Update
-            </button>
+          <div className="input-btn-container">
+            <label htmlFor="squatWeights">Weights: </label>
+            <input
+              type="text"
+              placeholder="ex. 5kgs"
+              name="squatWeights"
+              value={inputData.squatWeights}
+              onChange={handleChange}
+              id="squatWeights"
+            />
           </div>
-          <p className="reps">{`Reps: ${savedSunBSquatReps}`}</p>
+
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleSquatWeights}
+          >
+            Save to progress History
+          </button>
+
+          <div className="input-btn-container">
+            <label htmlFor="squatReps">Reps: </label>
+            <input
+              type="text"
+              placeholder="number of sets & reps"
+              name="squatReps"
+              value={inputData.squatReps}
+              onChange={handleChange}
+              id="squatReps"
+            />
+          </div>
+          <button
+            type="button"
+            onClick={handleSquatReps}
+            className="save-to-progress-history-button"
+          >
+            Save to progress History
+          </button>
         </div>
+
         <img
           className="exercise-img"
           src="https://cdn-0.weighttraining.guide/wp-content/uploads/2021/10/Bulgarian-split-squat.png"
           alt="person performing the bulgarian split squat which shows which muscles are being used"
         />
-      </form>
+      </div>
 
-      <form>
-        <div className="exercise-container">
+      <div className="exercise-container">
+        <div className="exercise-content-container">
           <h3>
             Legs & Glutes:
             <span>Hip Thrust</span>
           </h3>
-          <div>
-            <label>
-              <input
-                type="text"
-                placeholder="weight amount in kg"
-                name="hipThrustWeights"
-                value={formData.hipThrustWeights}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleHipThrustWeights}
-            >
-              Update
-            </button>
-          </div>
-          <p>{`Weights: ${savedSunHipThrustWeights}`}</p>
+          <p>
+            You can take a heavy weight with this exercise. Get your back
+            comfortable on the bench and push up through your heels.
+          </p>
 
-          <div>
-            <label>
-              <input
-                type="text"
-                placeholder="number of sets & reps"
-                name="hipThrustReps"
-                value={formData.hipThrustReps}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleHipThrustReps}
-            >
-              Update
-            </button>
+          <div className="input-btn-container">
+            <label htmlFor="hipThrustWeights">Weights:</label>
+            <input
+              type="text"
+              placeholder="ex. 20kg"
+              name="hipThrustWeights"
+              value={inputData.hipThrustWeights}
+              onChange={handleChange}
+              id="hipThrustWeights"
+            />
           </div>
-          <p>{`Reps: ${savedSunHipThrustReps}`}</p>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleHipThrustWeights}
+          >
+            Save to progress History
+          </button>
+
+          <div className="input-btn-container">
+            <label htmlFor="hipThrustReps">Reps:</label>
+            <input
+              type="text"
+              placeholder="ex. 3 sets of 20"
+              name="hipThrustReps"
+              value={inputData.hipThrustReps}
+              onChange={handleChange}
+              id="hipThrustReps"
+            />
+          </div>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleHipThrustReps}
+          >
+            Save to progress History
+          </button>
         </div>
         <img
           className="exercise-img"
           src="https://cdn-0.weighttraining.guide/wp-content/uploads/2017/04/barbell-hip-thrust-resized.png"
           alt="person performing the barbell hip thrust which shows which muscles are being used"
         />
-      </form>
-
-      <form>
-        <div className="exercise-container">
+      </div>
+      <div className="exercise-container">
+        <div className="exercise-content-container">
           <h3>
             Abs: <span>Long Arm Crunch</span>
           </h3>
 
-          <div>
-            <label>
-              <input
-                type="text"
-                placeholder="number of sets & reps"
-                name="crunchAbsReps"
-                value={formData.crunchAbsReps}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleCrunchAbs}
-            >
-              Update
-            </button>
+          <div className="input-btn-container">
+            <label htmlFor="crunchAbsReps">Reps:</label>
+            <input
+              type="text"
+              placeholder="ex. 3 sets of 10"
+              name="crunchAbsReps"
+              value={inputData.crunchAbsReps}
+              onChange={handleChange}
+              id="crunchAbsReps"
+            />
           </div>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleCrunchAbs}
+          >
+            Save to progress History
+          </button>
+
           <p>{`Reps: ${savedSunCrunchAbsReps}`}</p>
         </div>
 
@@ -453,33 +464,31 @@ const Sunday = () => {
           src="https://cdn-0.weighttraining.guide/wp-content/uploads/2022/07/Long-arm-crunch.png"
           alt="person performing the long arm crunch which shows which muscles are being used"
         />
-      </form>
-
-      <form>
-        <div className="exercise-container">
+      </div>
+      <div className="exercise-container">
+        <div className="exercise-content-container">
           <h3>
             Abs: <span>Alternating Knee Tuck</span>
           </h3>
 
-          <div>
-            <label>
-              <input
-                type="text"
-                placeholder="number of sets & reps"
-                name="kneeTuckAbsReps"
-                value={formData.kneeTuckAbsReps}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleKneeTuckAbs}
-            >
-              Update
-            </button>
+          <div className="input-btn-container">
+            <label htmlFor="kneeTuckAbsReps"></label>
+            <input
+              type="text"
+              placeholder="ex. 3 sets of 10"
+              name="kneeTuckAbsReps"
+              value={inputData.kneeTuckAbsReps}
+              onChange={handleChange}
+              id="kneeTuckAbsReps"
+            />
           </div>
-          <p>{`Reps: ${savedSunKneeTuckAbsReps}`}</p>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleKneeTuckAbs}
+          >
+            Save to progress History
+          </button>
         </div>
 
         <img
@@ -487,33 +496,31 @@ const Sunday = () => {
           src="https://cdn-0.weighttraining.guide/wp-content/uploads/2022/06/Seated-alternating-knee-tuck.png"
           alt="person performing the setaed alternating knee tuck which shows which muscles are being used"
         />
-      </form>
-
-      <form>
-        <div className="exercise-container">
+      </div>
+      <div className="exercise-container">
+        <div className="exercise-content-container">
           <h3>
             Abs: <span>Cross Scissor Kick</span>
           </h3>
 
-          <div>
-            <label>
-              <input
-                type="text"
-                placeholder="number of sets & reps"
-                name="scissorKickAbsReps"
-                value={formData.scissorKickAbsReps}
-                onChange={handleChange}
-              />
-            </label>
-            <button
-              className="form-button"
-              type="button"
-              onClick={handleScissorKickAbs}
-            >
-              Update
-            </button>
+          <div className="input-btn-container">
+            <label htmlFor="scissorKickAbsReps"></label>
+            <input
+              type="text"
+              placeholder="number of sets & reps"
+              name="scissorKickAbsReps"
+              value={inputData.scissorKickAbsReps}
+              onChange={handleChange}
+              id="scissorKickAbsReps"
+            />
           </div>
-          <p>{`Reps: ${savedSunScissorKickAbsReps}`}</p>
+          <button
+            className="save-to-progress-history-button"
+            type="button"
+            onClick={handleScissorKickAbs}
+          >
+            Save to progress History
+          </button>
         </div>
 
         <img
@@ -521,24 +528,26 @@ const Sunday = () => {
           src="https://cdn-0.weighttraining.guide/wp-content/uploads/2022/05/Seated-cross-scissor-kick.png"
           alt="person performing the seated cross-scissor kick which shows which muscles are being used"
         />
-      </form>
-
-      <button className="progress-button" onClick={handleCheckProgress}>
-        Check Progress
+      </div>
+      <button
+        className="check-progress-history-button"
+        onClick={handleCheckProgress}
+      >
+        Check Progress History
       </button>
-
       {/* display the progress History */}
       <div className="progress-history">
         {progressHistory.length > 0 && (
           <>
             <h3>Progress History</h3>
             {progressHistory.map((exercise) => (
-              <div key={exercise.name}>
+              <div key={exercise.name} className="progress-row">
                 <h4>{exercise.name}</h4>
                 <ul>
                   {exercise.data.map((entry, index) => (
                     <li key={index} style={{ color: "rgb(144, 143, 143)" }}>
-                      {entry.value} – {formatDate(entry.updatedAt)}
+                      {entry.value} – {formatDate(entry.updatedAt)}{" "}
+                      <TbTrashXFilled className="trash-icon" />
                     </li>
                   ))}
                 </ul>
