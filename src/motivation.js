@@ -6,6 +6,21 @@ const data = [
   "Be the absolute best version of yourself that you can possibly be.",
   "Be kind to yourself, whilst still pushing yourself to be better!",
   "Be strong and commit to your workout!",
+  "The only bad workout is the one that didn’t happen.",
+  "Push yourself, because no one else is going to do it for you.",
+  "Fitness is not about being better than someone else. It’s about being better than you used to be.",
+  "Your body can stand almost anything. It’s your mind you have to convince.",
+  "Don’t limit your challenges—challenge your limits.",
+  "Take care of your body. It’s the only place you have to live. — Jim Rohn",
+  "Health is not just about what you’re eating. It’s also about what you’re thinking and saying.",
+  "The food you eat can be either the safest and most powerful form of medicine or the slowest form of poison. — Ann Wigmore",
+  "Every healthy choice you make today is an investment in a better tomorrow.",
+  "You don’t have to eat less. You just have to eat right.",
+  "Discipline is choosing between what you want now and what you want most. — Abraham Lincoln",
+  "Motivation gets you started. Habit keeps you going. — Jim Ryun",
+  "Success isn’t always about greatness. It’s about consistency. Consistent hard work gains success. — Dwayne “The Rock” Johnson",
+  "It’s a slow process, but quitting won’t speed it up.",
+  "Small steps every day. One day you’ll look back and be amazed at how far you’ve come.",
 ];
 
 export default data;

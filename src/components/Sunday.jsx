@@ -269,7 +269,7 @@ const Sunday = () => {
             <label htmlFor="scissorKickAbsReps"></label>
             <input
               type="text"
-              placeholder="number of sets & reps"
+              placeholder="3 sets of 10"
               name="scissorKickAbsReps"
               value={inputData.scissorKickAbsReps}
               onChange={handleChange}
