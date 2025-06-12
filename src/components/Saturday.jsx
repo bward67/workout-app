@@ -85,7 +85,9 @@ const Saturday = () => {
           "{message}" DOES sound like fun. Enjoy every second!
         </h2>
       )}
-      <InterestingThings />
+      <div className="sat-interesting-things">
+        <InterestingThings />
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import ThingToKnow from "./InterestingThings";
+import InterestingThings from "./InterestingThings";
 import { TbTrashXFilled } from "react-icons/tb";
+import ConfirmDeleteModal from "./ConfirmDeleteModal.jsx";
 
 const Sunday = () => {
   const [inputData, setInputData] = useState({
@@ -13,312 +14,118 @@ const Sunday = () => {
     scissorKickAbsReps: "",
   });
 
-  //console.log(formData);
-
-  const [savedSunBSquatWeights, setSavedSunBSquatWeights] = useState(() => {
-    const saved = localStorage.getItem("savedSunBSquatWeights");
-    return saved ? JSON.parse(saved).value : "";
-  });
-
-  const [savedSunBSquatReps, setSavedSunBSquatReps] = useState(() => {
-    const saved = localStorage.getItem("savedSunBSquatReps");
-    return saved ? JSON.parse(saved).value : "";
-  });
-
-  const [savedSunHipThrustWeights, setSavedSunHipThrustWeights] = useState(
-    () => {
-      const saved = localStorage.getItem("savedSunHipThrustWeights");
-      return saved ? JSON.parse(saved).value : "";
-    }
-  );
-
-  const [savedSunHipThrustReps, setSavedSunHipThrustReps] = useState(() => {
-    const saved = localStorage.getItem("savedSunHipThrustReps");
-    return saved ? JSON.parse(saved).value : "";
-  });
-
-  const [savedSunCrunchAbsReps, setSavedSunCrunchAbsReps] = useState(() => {
-    const saved = localStorage.getItem("savedSunCrunchAbsReps");
-    return saved ? JSON.parse(saved).value : "";
-  });
-
-  const [savedSunKneeTuckAbsReps, setSavedSunKneeTuckAbsReps] = useState(() => {
-    const saved = localStorage.getItem("savedSunKneeTuckAbsReps");
-    return saved ? JSON.parse(saved).value : "";
-  });
-
-  const [savedSunScissorKickAbsReps, setSavedSunScissorKickAbsReps] = useState(
-    () => {
-      const saved = localStorage.getItem("savedSunScissorKickAbsReps");
-      return saved ? JSON.parse(saved).value : "";
-    }
-  );
-
   const [progressHistory, setProgressHistory] = useState([]);
-
-  ///! useEffect so that input data persists even after browzer closes and reopens:
-  useEffect(() => {
-    const savedData = {
-      squatWeights:
-        JSON.parse(localStorage.getItem("savedSunBSquatWeights"))?.value || "",
-      squatReps:
-        JSON.parse(localStorage.getItem("savedSunBSquatReps"))?.value || "",
-      hipThrustWeights:
-        JSON.parse(localStorage.getItem("savedSunHipThrustWeights"))?.value ||
-        "",
-      hipThrustReps:
-        JSON.parse(localStorage.getItem("savedSunHipThrustReps"))?.value || "",
-      crunchAbsReps:
-        JSON.parse(localStorage.getItem("savedSunCrunchAbsReps"))?.value || "",
-      kneeTuckAbsReps:
-        JSON.parse(localStorage.getItem("savedSunKneeTuckAbsReps"))?.value ||
-        "",
-      scissorKickAbsReps:
-        JSON.parse(localStorage.getItem("savedSunScissorKickAbsReps"))?.value ||
-        "",
-    };
-
-    setInputData(savedData);
-  }, []);
+  const [showHistory, setShowHistory] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [entryToDelete, setEntryToDelete] = useState(null);
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setInputData((prev) => ({ ...prev, [name]: value }));
+    setInputData((prev) => {
+      const newData = { ...prev, [name]: value };
+      localStorage.setItem("sundayData", JSON.stringify(newData));
+      return newData;
+    });
+  }
 
-    // Save to localStorage right away
-    const newEntry = { value, updatedAt: new Date().toISOString() };
+  useEffect(() => {
+    const savedLSdata = JSON.parse(localStorage.getItem("sundayData")) || {
+      squatWeights: "",
+      squatReps: "",
+      hipThrustWeights: "",
+      hipThrustReps: "",
+      crunchAbsReps: "",
+      kneeTuckAbsReps: "",
+      scissorKickAbsReps: "",
+    };
+    setInputData(savedLSdata);
 
-    switch (name) {
-      case "squatWeights":
-        localStorage.setItem("savedSunBSquatWeights", JSON.stringify(newEntry));
-        break;
-      case "squatReps":
-        localStorage.setItem("savedSunBSquatReps", JSON.stringify(newEntry));
-        break;
-      case "hipThrustWeights":
-        localStorage.setItem(
-          "savedSunHipThrustWeights",
-          JSON.stringify(newEntry)
-        );
-        break;
-      case "hipThrustReps":
-        localStorage.setItem("savedSunHipThrustReps", JSON.stringify(newEntry));
-        break;
-      case "crunchAbsReps":
-        localStorage.setItem("savedSunCrunchAbsReps", JSON.stringify(newEntry));
-        break;
-      case "kneeTuckAbsReps":
-        localStorage.setItem(
-          "savedSunKneeTuckAbsReps",
-          JSON.stringify(newEntry)
-        );
-        break;
-      case "scissorKickAbsReps":
-        localStorage.setItem(
-          "savedSunScissorKickAbsReps",
-          JSON.stringify(newEntry)
-        );
-        break;
-      default:
-        break;
-    }
+    const savedHistory =
+      JSON.parse(localStorage.getItem("sundayProgressHistory")) || [];
+
+    setProgressHistory(savedHistory);
+  }, []);
+
+  function formatDate(date) {
+    return new Date(date).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
   }
   //! I want the user to click on the Check Progress btn and have a pop up which shows what dates they changed/input weights and reps for a certain exercise
   //? we can get the timestamp of when the user clicked the button and save it to localStorage - which we can then retrieve later
-  function handleSquatWeights() {
-    //!  but if newEntry is "" don't push it
-    const squatWeights = inputData.squatWeights.trim();
-    if (squatWeights === "") return;
-    const timestamp = new Date().toISOString();
-    //console.log(timestamp);
-    const newEntry = { value: inputData.squatWeights, updatedAt: timestamp };
-    //Store in history
-    const history =
-      JSON.parse(localStorage.getItem("sunSquatWeightsHistory")) || [];
-
-    history.push(newEntry);
-
-    localStorage.setItem("sunSquatWeightsHistory", JSON.stringify(history));
-    console.log(history);
-
-    //Store lastest
-    localStorage.setItem("savedSunBSquatWeights", JSON.stringify(newEntry));
-    setSavedSunBSquatWeights(inputData.squatWeights);
-    // setFormData((prev) => ({ ...prev, squatWeights: "" }));
-  }
-
-  function handleSquatReps() {
-    const squatReps = inputData.squatReps.trim();
-    if (squatReps === "") return;
-    const timestamp = new Date().toISOString();
-    const newEntry = { value: inputData.squatReps, updatedAt: timestamp };
-
-    //Store in history
-    const history =
-      JSON.parse(localStorage.getItem("sunSquatRepsHistory")) || [];
-    history.push(newEntry);
-    localStorage.setItem("sunSquatRepsHistory", JSON.stringify(history));
-
-    //Store latest
-    localStorage.setItem("savedSunBSquatReps", JSON.stringify(newEntry));
-    setSavedSunBSquatReps(inputData.squatReps);
-    // setFormData((prev) => ({ ...prev, squatReps: "" }));
-  }
-
-  function handleHipThrustWeights() {
-    const hipThrustWeights = inputData.hipThrustWeights.trim();
-    if (hipThrustWeights === "") return;
-    const timestamp = new Date().toISOString();
-    const newEntry = {
-      value: inputData.hipThrustWeights,
-      updatedAt: timestamp,
-    };
-    //Store in history
-    const history =
-      JSON.parse(localStorage.getItem("sunHipThrustWeightsHistory")) || [];
-    history.push(newEntry);
-    localStorage.setItem("sunHipThrustWeightsHistory", JSON.stringify(history));
-
-    //Store latest
-    localStorage.setItem("savedSunHipThrustWeights", JSON.stringify(newEntry));
-    setSavedSunHipThrustWeights(inputData.hipThrustWeights);
-    setInputData((prev) => ({ ...prev, hipThrustWeights: "" }));
-  }
-
-  function handleHipThrustReps() {
-    const hipThrustReps = inputData.hipThrustReps.trim();
-    if (hipThrustReps === "") return;
-    const timestamp = new Date().toISOString();
-    const newEntry = { value: inputData.hipThrustReps, updatedAt: timestamp };
-
-    //Store in history
-    const history =
-      JSON.parse(localStorage.getItem("sunHipThrustRepsHistory")) || [];
-    history.push(newEntry);
-    localStorage.setItem("sunHipThrustRepsHistory", JSON.stringify(history));
-
-    //Store latest
-    localStorage.setItem("savedSunHipThrustReps", JSON.stringify(newEntry));
-    setSavedSunHipThrustReps(inputData.hipThrustReps);
-    setInputData((prev) => ({ ...prev, hipThrustReps: "" }));
-  }
-
-  function handleCrunchAbs() {
-    const crunchAbsReps = inputData.crunchAbsReps.trim();
-    if (crunchAbsReps === "") return;
-    const timestamp = new Date().toISOString();
-    const newEntry = { value: inputData.crunchAbsReps, updatedAt: timestamp };
-
-    //Store in history
-    const history =
-      JSON.parse(localStorage.getItem("sunCrunchAbsRepsHistory")) || [];
-    history.push(newEntry);
-    localStorage.setItem("sunCrunchAbsRepsHistory", JSON.stringify(history));
-
-    //Store latest
-    localStorage.setItem("savedSunCrunchAbsReps", JSON.stringify(newEntry));
-    setSavedSunCrunchAbsReps(inputData.crunchAbsReps);
-    setInputData((prev) => ({ ...prev, crunchAbsReps: "" }));
-  }
-
-  function handleKneeTuckAbs() {
-    const kneeTuckAbsReps = inputData.kneeTuckAbsReps.trim();
-    if (kneeTuckAbsReps === "") return;
-    const timestamp = new Date().toISOString();
-    const newEntry = { value: inputData.kneeTuckAbsReps, updatedAt: timestamp };
-
-    //Store in history
-    const history =
-      JSON.parse(localStorage.getItem("sunKneeTuckAbsRepsHistory")) || [];
-    history.push(newEntry);
-    localStorage.setItem("sunKneeTuckAbsRepsHistory", JSON.stringify(history));
-
-    //Store latest
-    localStorage.setItem("savedSunKneeTuckAbsReps", JSON.stringify(newEntry));
-    setSavedSunKneeTuckAbsReps(inputData.kneeTuckAbsReps);
-    setInputData((prev) => ({ ...prev, kneeTuckAbsReps: "" }));
-  }
-
-  function handleScissorKickAbs() {
-    const scissorKickAbsReps = inputData.scissorKickAbsReps.trim();
-    if (scissorKickAbsReps === "") return;
-    const timestamp = new Date().toISOString();
-    const newEntry = {
-      value: inputData.scissorKickAbsReps,
-      updatedAt: timestamp,
-    };
-
-    //Store in history
-    const history =
-      JSON.parse(localStorage.getItem("sunScissorKickAbsRepsHistory")) || [];
-    history.push(newEntry);
-    localStorage.setItem(
-      "sunScissorKickAbsRepsHistory",
-      JSON.stringify(history)
-    );
-
-    //Store latest
-    localStorage.setItem(
-      "savedSunScissorKickAbsReps",
-      JSON.stringify(newEntry)
-    );
-    setSavedSunScissorKickAbsReps(inputData.scissorKickAbsReps);
-    setInputData((prev) => ({ ...prev, scissorKickAbsReps: "" }));
-  }
-
-  function formatDate(isoString) {
-    if (!isoString) return "N/A";
-    const date = new Date(isoString);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are 0-based
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  }
 
   //! BUT lets set this up to Toggle on and off
-  function handleCheckProgress() {
-    const sunSquatWeightsHistory =
-      JSON.parse(localStorage.getItem("sunSquatWeightsHistory")) || [];
-    const sunSquatRepsHistory =
-      JSON.parse(localStorage.getItem("sunSquatRepsHistory")) || [];
-    const sunHipThrustWeightsHistory =
-      JSON.parse(localStorage.getItem("sunHipThrustWeightsHistory")) || [];
-    const sunHipThrustRepsHistory =
-      JSON.parse(localStorage.getItem("sunHipThrustRepsHistory")) || [];
-    const sunCrunchAbsRepsHistory =
-      JSON.parse(localStorage.getItem("sunCrunchAbsRepsHistory")) || [];
-    const sunKneeTuckAbsRepsHistory =
-      JSON.parse(localStorage.getItem("sunKneeTuckAbsRepsHistory")) || [];
-    const sunScissorKickAbsRepsHistory =
-      JSON.parse(localStorage.getItem("sunScissorKickAbsRepsHistory")) || [];
+  function handleSaveToProgressHistory() {
+    const timestamp = formatDate(new Date());
+    const newEntries = [];
 
-    const allProgress = [
-      {
-        name: "Bulgarian Split Squats: Weights",
-        data: sunSquatWeightsHistory,
-      },
-      { name: "Bulgarian Split Squats: Reps", data: sunSquatRepsHistory },
-      { name: "Hip Thrust: Weights", data: sunHipThrustWeightsHistory },
-      { name: "Hip Thrust: Reps", data: sunHipThrustRepsHistory },
-      { name: "Long Arm Crunch: Reps", data: sunCrunchAbsRepsHistory },
-      {
-        name: "Alternating Knee Tuck: Reps",
-        data: sunKneeTuckAbsRepsHistory,
-      },
-      {
-        name: "Cross Scissor Kick: Reps",
-        data: sunScissorKickAbsRepsHistory,
-      },
-    ];
+    if (inputData.squatWeights.trim() && inputData.squatReps.trim()) {
+      newEntries.push({
+        exercise: "Bul Squats",
+        value: `${inputData.squatWeights} - ${inputData.squatReps}`,
+        date: timestamp,
+      });
+    }
+    if (inputData.hipThrustWeights.trim() && inputData.hipThrustReps.trim()) {
+      newEntries.push({
+        exercise: "Hip Thrusts",
+        value: `${inputData.hipThrustWeights} - ${inputData.hipThrustReps} `,
+        date: timestamp,
+      });
+    }
+    if (inputData.crunchAbsReps.trim()) {
+      newEntries.push({
+        exercise: "Crunch Abs",
+        value: inputData.crunchAbsReps,
+        date: timestamp,
+      });
+    }
+    if (inputData.kneeTuckAbsReps.trim()) {
+      newEntries.push({
+        exercise: "Knee Tuck Abs",
+        value: inputData.kneeTuckAbsReps,
+        date: timestamp,
+      });
+    }
+    if (inputData.scissorKickAbsReps.trim()) {
+      newEntries.push({
+        exercise: "Scissor Kick Abs",
+        value: inputData.scissorKickAbsReps,
+        date: timestamp,
+      });
+    }
+    if (newEntries.length === 0) {
+      alert("Please fill in both Weights and Reps for at least one exercise.");
+    }
+    const newHistory = [...progressHistory, ...newEntries];
+    setProgressHistory(newHistory);
+    localStorage.setItem("sundayProgressHistory", JSON.stringify(newHistory));
+  }
 
-    setProgressHistory(allProgress);
+  function handleCheckProgressHistory() {
+    setShowHistory((prev) => !prev);
+  }
+
+  function confirmDeleteEntry() {
+    const updatedHistory = progressHistory.filter(
+      (_, index) => index !== entryToDelete
+    );
+    setProgressHistory(updatedHistory);
+    localStorage.setItem(
+      "sundayProgressHistory",
+      JSON.stringify(updatedHistory)
+    );
+    setShowModal(false);
+    setEntryToDelete(null);
   }
 
   return (
     <div className="weekday-component-container">
       <h1>Super Strength Sunday!</h1>
       <h2>Legs, Glutes & Abs</h2>
-      <ThingToKnow />
+      <InterestingThings />
       <div className="exercise-container">
         <div className="exercise-content-container">
           <h3>
@@ -326,7 +133,7 @@ const Sunday = () => {
           </h3>
           <p>
             Those Bulgarians showed no mercy when they invented this exercise!
-            Push up through your heel. You will feel it.
+            Push up through your heel. You WILL feel it!
           </p>
 
           <div className="input-btn-container">
@@ -341,14 +148,6 @@ const Sunday = () => {
             />
           </div>
 
-          <button
-            className="save-to-progress-history-button"
-            type="button"
-            onClick={handleSquatWeights}
-          >
-            Save to progress History
-          </button>
-
           <div className="input-btn-container">
             <label htmlFor="squatReps">Reps: </label>
             <input
@@ -360,13 +159,6 @@ const Sunday = () => {
               id="squatReps"
             />
           </div>
-          <button
-            type="button"
-            onClick={handleSquatReps}
-            className="save-to-progress-history-button"
-          >
-            Save to progress History
-          </button>
         </div>
 
         <img
@@ -398,13 +190,6 @@ const Sunday = () => {
               id="hipThrustWeights"
             />
           </div>
-          <button
-            className="save-to-progress-history-button"
-            type="button"
-            onClick={handleHipThrustWeights}
-          >
-            Save to progress History
-          </button>
 
           <div className="input-btn-container">
             <label htmlFor="hipThrustReps">Reps:</label>
@@ -417,13 +202,6 @@ const Sunday = () => {
               id="hipThrustReps"
             />
           </div>
-          <button
-            className="save-to-progress-history-button"
-            type="button"
-            onClick={handleHipThrustReps}
-          >
-            Save to progress History
-          </button>
         </div>
         <img
           className="exercise-img"
@@ -448,15 +226,6 @@ const Sunday = () => {
               id="crunchAbsReps"
             />
           </div>
-          <button
-            className="save-to-progress-history-button"
-            type="button"
-            onClick={handleCrunchAbs}
-          >
-            Save to progress History
-          </button>
-
-          <p>{`Reps: ${savedSunCrunchAbsReps}`}</p>
         </div>
 
         <img
@@ -482,13 +251,6 @@ const Sunday = () => {
               id="kneeTuckAbsReps"
             />
           </div>
-          <button
-            className="save-to-progress-history-button"
-            type="button"
-            onClick={handleKneeTuckAbs}
-          >
-            Save to progress History
-          </button>
         </div>
 
         <img
@@ -517,7 +279,7 @@ const Sunday = () => {
           <button
             className="save-to-progress-history-button"
             type="button"
-            onClick={handleScissorKickAbs}
+            onClick={handleSaveToProgressHistory}
           >
             Save to progress History
           </button>
@@ -531,31 +293,48 @@ const Sunday = () => {
       </div>
       <button
         className="check-progress-history-button"
-        onClick={handleCheckProgress}
+        onClick={handleCheckProgressHistory}
       >
         Check Progress History
       </button>
       {/* display the progress History */}
-      <div className="progress-history">
-        {progressHistory.length > 0 && (
-          <>
-            <h3>Progress History</h3>
-            {progressHistory.map((exercise) => (
-              <div key={exercise.name} className="progress-row">
-                <h4>{exercise.name}</h4>
-                <ul>
-                  {exercise.data.map((entry, index) => (
-                    <li key={index} style={{ color: "rgb(144, 143, 143)" }}>
-                      {entry.value} – {formatDate(entry.updatedAt)}{" "}
-                      <TbTrashXFilled className="trash-icon" />
-                    </li>
-                  ))}
-                </ul>
-              </div>
+
+      {showHistory && progressHistory.length > 0 && (
+        <div className="progress-history">
+          <h3>Progress History</h3>
+          <ul>
+            {progressHistory.map((entry, index) => (
+              <li key={index}>
+                <div className="progress-history-list-item">
+                  <p>{entry.exercise}</p>
+                  <p>{entry.value}</p>
+                  <p>{entry.date}</p>
+                  <TbTrashXFilled
+                    className="trash-icon"
+                    onClick={() => {
+                      setEntryToDelete(index);
+                      setShowModal(true);
+                    }}
+                    title="Delete entry"
+                  />
+                </div>
+              </li>
             ))}
-          </>
-        )}
-      </div>
+          </ul>
+        </div>
+      )}
+
+      {showModal && (
+        <ConfirmDeleteModal
+          isOpen={showModal}
+          message="Are you sure you want to delete this entry?"
+          onConfirm={confirmDeleteEntry}
+          onCancel={() => {
+            setShowModal(false);
+            setEntryToDelete(null);
+          }}
+        />
+      )}
     </div>
   );
 };

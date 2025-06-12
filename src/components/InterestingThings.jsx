@@ -1,7 +1,7 @@
 import React from "react";
 import data from "../nutrition.js";
 
-const ThingToKnow = () => {
+const InterestingThings = () => {
   const randomIndex = Math.floor(Math.random() * data.length);
   const randomItem = data[randomIndex];
   // console.log(randomIndex);
@@ -17,4 +17,4 @@ const ThingToKnow = () => {
   );
 };
 
-export default ThingToKnow;
+export default InterestingThings;

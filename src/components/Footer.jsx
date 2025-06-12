@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import data from "../motivation.js";
 
 const Footer = () => {
@@ -15,6 +15,8 @@ const Footer = () => {
   const randomIndex = Math.floor(Math.random() * data.length);
   const randomItem = data[randomIndex];
 
+  const currentYear = new Date().getFullYear();
+
   return (
     <>
       <div className="footer-container">
@@ -23,7 +25,10 @@ const Footer = () => {
           <h3>{randomItem}</h3>
         </div>
       </div>
-      <h6>Thanks to: https://weighttraining.guide for the images.</h6>
+      <small>
+        Thanks to: https://weighttraining.guide for the images. &copy;
+        {currentYear} Barbara Ward. All rights reserved.
+      </small>
     </>
   );
 };

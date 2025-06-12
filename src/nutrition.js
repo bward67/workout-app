@@ -15,7 +15,8 @@ const data = [
   },
   {
     food: "Oranges, Lemons, Grapefruits",
-    benefits: "are vital for collagen synthesis, help firm and repair skin.",
+    benefits:
+      "are vital for collagen synthesis, and they help firm and repair skin.",
   },
   {
     food: "Spinach & Kale",

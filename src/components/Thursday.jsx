@@ -1,85 +1,122 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../workoutStyle.css";
+import InterestingThings from "./InterestingThings";
+import { TbTrashXFilled } from "react-icons/tb";
+import ConfirmDeleteModal from "./ConfirmDeleteModal.jsx";
 
 const Thursday = () => {
-  const [formData, setFormData] = useState({
+  const [inputData, setInputData] = useState({
     chestWeights: "",
     chestReps: "",
     backWeights: "",
     backReps: "",
   });
 
-  const [savedThursChestWeights, setSavedThursChestWeights] = useState(
-    localStorage.getItem("savedThursChestWeights")
-  );
-  const [savedThursChestReps, setSavedThursChestReps] = useState(
-    localStorage.getItem("savedThursChestReps")
-  );
-
-  const [savedThursBackWeights, setSavedThursBackWeights] = useState(
-    localStorage.getItem("savedThursBackWeights")
-  );
-  const [savedThursBackReps, setSavedThursBackReps] = useState(
-    localStorage.getItem("savedThursBackReps")
-  );
+  const [progressHistory, setProgressHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [entryToDelete, setEntryToDelete] = useState(null);
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setInputData((prev) => {
+      const newData = { ...prev, [name]: value };
+      localStorage.setItem("thursdayData", JSON.stringify(newData));
+      return newData;
+    });
+  }
+  // this is to load saved data from localStorage on first render
+  useEffect(() => {
+    const savedLSdata = JSON.parse(localStorage.getItem("thursdayData")) || {
+      chestWeights: "",
+      chestReps: "",
+      backWeights: "",
+      backReps: "",
+    };
+    setInputData(savedLSdata);
+
+    const savedHistory =
+      JSON.parse(localStorage.getItem("thursdayProgressHistory")) || [];
+    setProgressHistory(savedHistory);
+  }, []);
+
+  function formatDate(date) {
+    return new Date(date).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
   }
 
-  function handleUpdateChestWeights() {
-    localStorage.setItem("savedThursChestWeights", formData.chestWeights);
-    setSavedThursChestWeights(formData.chestWeights);
-    setFormData((prev) => ({ ...prev, chestWeights: "" }));
+  function handleSaveToProgressHistory() {
+    const timestamp = formatDate(new Date());
+    const newEntries = [];
+
+    if (inputData.chestWeights.trim() && inputData.chestReps.trim()) {
+      newEntries.push({
+        exercise: "Chest",
+        value: `${inputData.chestWeights} - ${inputData.chestReps}`,
+        date: timestamp,
+      });
+    }
+
+    if (inputData.backWeights.trim() && inputData.backReps.trim()) {
+      newEntries.push({
+        exercise: "Back",
+        value: `${inputData.backWeights} - ${inputData.backReps}`,
+        date: timestamp,
+      });
+    }
+
+    if (newEntries.length === 0) {
+      alert("Please fill in both weights and Reps for a least one exercise");
+    }
+
+    const newHistory = [...progressHistory, ...newEntries];
+    setProgressHistory(newHistory);
+    localStorage.setItem("thursdayProgressHistory", JSON.stringify(newHistory));
   }
 
-  function handleUpdateChestReps() {
-    localStorage.setItem("savedThursChestReps", formData.chestReps);
-    setSavedThursChestReps(formData.chestReps);
-    setFormData((prev) => ({ ...prev, chestReps: "" }));
+  function handleCheckProgressHistory() {
+    setShowHistory((prev) => !prev);
   }
 
-  function handleUpdateBackWeights() {
-    localStorage.setItem("savedThursBackWeights", formData.backWeights);
-    setSavedThursBackWeights(formData.backWeights);
-    setFormData((prev) => ({ ...prev, backWeights: "" }));
+  function confirmDeleteEntry() {
+    const updatedHistory = progressHistory.filter(
+      (_, index) => index !== entryToDelete
+    ); // so keep everything EXCEPT the one we are clicking on
+    setProgressHistory(updatedHistory);
+    localStorage.setItem(
+      "thursdayProgressHistory",
+      JSON.stringify(updatedHistory)
+    );
+    setShowModal(false);
+    setEntryToDelete(null);
   }
 
-  function handleUpdateBackReps() {
-    localStorage.setItem("savedThursBackReps", formData.backReps);
-    setSavedThursBackReps(formData.backReps);
-    setFormData((prev) => ({ ...prev, backReps: "" }));
-  }
   return (
     <div className="weekday-component-container">
       <h1>Thunder Thursday!</h1>
       <h2>Chest & Back</h2>
+      <InterestingThings />
 
       <div className="exercise-container">
         <div className="exercise-content-container">
           <h3>
             Chest: <span>Flyes</span>
           </h3>
-          <p>Feel the burn!</p>
+          <p>This will help good posture. Feel the burn!</p>
           <div className="input-btn-container">
             <label htmlFor="chestWeights">Weights:</label>
             <input
               type="text"
               placeholder="ex. 5kg"
               name="chestWeights"
-              value={formData.chestWeights}
+              value={inputData.chestWeights}
               onChange={handleChange}
               id="chestWeights"
             />
           </div>
-          <button
-            className="save-to-progress-history-button"
-            type="button"
-            onClick={handleUpdateChestWeights}
-          >
-            Save to Progress History
-          </button>
 
           <div className="input-btn-container">
             <label htmlFor="chestReps">Reps:</label>
@@ -87,18 +124,11 @@ const Thursday = () => {
               type="text"
               placeholder="ex. 3 sets of 12"
               name="chestReps"
-              value={formData.chestReps}
+              value={inputData.chestReps}
               onChange={handleChange}
               id="chestReps"
             />
           </div>
-          <button
-            className="save-to-progress-history-button"
-            type="button"
-            onClick={handleUpdateChestReps}
-          >
-            Save to Progress History
-          </button>
         </div>
         <img
           className="exercise-img"
@@ -122,18 +152,11 @@ const Thursday = () => {
               type="text"
               placeholder="ex. 8kg"
               name="backWeights"
-              value={formData.backWeights}
+              value={inputData.backWeights}
               onChange={handleChange}
               id="backWeights"
             />
           </div>
-          <button
-            className="save-to-progress-history-button"
-            type="button"
-            onClick={handleUpdateBackWeights}
-          >
-            Save to Progress History
-          </button>
 
           <div className="input-btn-container">
             <label htmlFor="backReps">Reps:</label>
@@ -141,7 +164,7 @@ const Thursday = () => {
               type="text"
               placeholder="ex. 3 sets of 12"
               name="backReps"
-              value={formData.backReps}
+              value={inputData.backReps}
               onChange={handleChange}
               id="backReps"
             />
@@ -149,7 +172,7 @@ const Thursday = () => {
           <button
             className="save-to-progress-history-button"
             type="button"
-            onClick={handleUpdateBackReps}
+            onClick={handleSaveToProgressHistory}
           >
             Save to Progress History
           </button>
@@ -160,9 +183,49 @@ const Thursday = () => {
           alt="person performing the bent-over dumbbell reverse fly which shows which muscles are being used"
         />
       </div>
-      <button className="check-progress-history-button">
+      <button
+        className="check-progress-history-button"
+        onClick={handleCheckProgressHistory}
+      >
         Check Progress History
       </button>
+
+      {showHistory && progressHistory.length > 0 && (
+        <div className="progress-history">
+          <h3>Progress History</h3>
+          <ul>
+            {progressHistory.map((entry, index) => (
+              <li key={index}>
+                <div className="progress-history-list-item">
+                  <p>{entry.exercise}:</p>
+                  <p>{entry.value}</p>
+                  <p>{entry.date}</p>
+                  <TbTrashXFilled
+                    className="trash-icon"
+                    onClick={() => {
+                      setEntryToDelete(index);
+                      setShowModal(true);
+                    }}
+                    title="Delete entry"
+                  />
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {showModal && (
+        <ConfirmDeleteModal
+          isOpen={showModal}
+          message="Are you sure you want to delete this entry?"
+          onConfirm={confirmDeleteEntry}
+          onCancel={() => {
+            setShowModal(false);
+            setEntryToDelete(null);
+          }}
+        />
+      )}
     </div>
   );
 };

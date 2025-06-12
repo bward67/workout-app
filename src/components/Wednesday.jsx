@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import InterestingThings from "./InterestingThings";
+import { TbTrashXFilled } from "react-icons/tb";
+import ConfirmDeleteModal from "./ConfirmDeleteModal.jsx";
 
 const Wednesday = () => {
-  const [formData, setFormData] = useState({
+  const [inputData, setInputData] = useState({
     lungeWeights: "",
     lungeReps: "",
     squatWeights: "",
@@ -10,80 +13,116 @@ const Wednesday = () => {
     vupAbs: "",
     hipRaiseAbs: "",
   });
-  const [savedLungeWeights, setSavedLungeWeights] = useState(
-    localStorage.getItem("savedLungeWeights") || ""
-    // we set it to "" inscase there is nothing in localStorage
-  );
-  const [savedLungeReps, setSavedLungeReps] = useState(
-    localStorage.getItem("savedLungeReps") || ""
-  );
-  const [savedSquatWeights, setSavedSquatWeights] = useState(
-    localStorage.getItem("savedSquatWeights") || ""
-  );
-  const [savedSquatReps, setSavedSquatReps] = useState(
-    localStorage.getItem("savedSquatReps")
-  );
-  const [savedJkAbs, setSavedJkAbs] = useState(
-    localStorage.getItem("savedJkAbs") || ""
-  );
-  const [savedVupAbs, setSavedVupAbs] = useState(
-    localStorage.getItem("savedVupAbs") || ""
-  );
-  const [savedHipRaiseAbs, setSavedHipRaiseAbs] = useState(
-    localStorage.getItem("savedHipRaiseAbs") || ""
-  );
+
+  const [progressHistory, setProgressHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [entryToDelete, setEntryToDelete] = useState(null);
 
   function handleChange(e) {
-    console.log(e.target.value);
-    console.log(e.target.name);
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setInputData((prev) => {
+      const newData = { ...prev, [name]: value };
+      localStorage.setItem("wednesdayData", JSON.stringify(newData));
+      return newData;
+    });
   }
 
-  function handleLungeWeights() {
-    localStorage.setItem("savedLungeWeights", formData.lungeWeights);
-    setSavedLungeWeights(formData.lungeWeights);
-    setFormData((prev) => ({ ...prev, lungeWeights: "" }));
-    // to clear out the input field
+  useEffect(() => {
+    const savedLSdata = JSON.parse(localStorage.getItem("wednesdayData")) || {
+      lungeWeights: "",
+      lungeReps: "",
+      squatWeights: "",
+      squatReps: "",
+      jkAbs: "",
+      vupAbs: "",
+      hipRaiseAbs: "",
+    };
+    setInputData(savedLSdata);
+
+    const savedHistory =
+      JSON.parse(localStorage.getItem("wednesdayProgressHistory")) || [];
+
+    setProgressHistory(savedHistory);
+  }, []);
+
+  function formatDate(date) {
+    return new Date(date).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
   }
 
-  function handleLungeReps() {
-    localStorage.setItem("savedLungeReps", formData.lungeReps);
-    setSavedLungeReps(formData.lungeReps);
-    setFormData((prev) => ({ ...prev, lungeReps: "" }));
-  }
-  function handleSquatWeights() {
-    localStorage.setItem("savedSquatWeights", formData.squatWeights);
-    setSavedSquatWeights(formData.squatWeights);
-    setFormData((prev) => ({ ...prev, squatWeights: "" }));
+  function handleSaveToProgressHistory() {
+    const timestamp = formatDate(new Date());
+    const newEntries = [];
+
+    if (inputData.lungeWeights.trim() && inputData.lungeReps.trim()) {
+      newEntries.push({
+        exercise: "Lunge Walk",
+        value: `${inputData.lungeWeights} - ${inputData.lungeReps}`,
+        date: timestamp,
+      });
+    }
+    if (inputData.squatWeights.trim() && inputData.squatReps.trim()) {
+      newEntries.push({
+        exercise: "Squats",
+        value: `${inputData.squatWeights} - ${inputData.squatReps} `,
+        date: timestamp,
+      });
+    }
+    if (inputData.jkAbs.trim()) {
+      newEntries.push({
+        exercise: "JK Abs",
+        value: inputData.jkAbs,
+        date: timestamp,
+      });
+    }
+    if (inputData.vupAbs.trim()) {
+      newEntries.push({
+        exercise: "V-up Abs",
+        value: inputData.vupAbs,
+        date: timestamp,
+      });
+    }
+    if (inputData.hipRaiseAbs.trim()) {
+      newEntries.push({
+        exercise: "Hip Raise Abs",
+        value: inputData.hipRaiseAbs,
+        date: timestamp,
+      });
+    }
+    if (newEntries.length === 0) {
+      alert("Please fill in both Weights and Reps for at least one exercise.");
+    }
+    const newHistory = [...progressHistory, ...newEntries];
+    setProgressHistory(newHistory);
+    localStorage.setItem("sundayProgressHistory", JSON.stringify(newHistory));
   }
 
-  function handleSquatReps() {
-    localStorage.setItem("savedSquatReps", formData.squatReps);
-    setSavedSquatReps(formData.squatReps);
-    setFormData((prev) => ({ ...prev, squatReps: "" }));
+  function handleCheckProgressHistory() {
+    setShowHistory((prev) => !prev);
   }
 
-  function handleJkAbs() {
-    localStorage.setItem("savedJkAbs", formData.jkAbs);
-    setSavedJkAbs(formData.jkAbs);
-    setFormData((prev) => ({ ...prev, jkAbs: "" }));
-  }
-  function handleVupAbs() {
-    localStorage.setItem("savedVupAbs", formData.vupAbs);
-    setSavedVupAbs(formData.vupAbs);
-    setFormData((prev) => ({ ...prev, vupAbs: "" }));
-  }
-  function handleHipRaiseAbs() {
-    localStorage.setItem("savedHipRaiseAbs", formData.hipRaiseAbs);
-    setSavedHipRaiseAbs(formData.hipRaiseAbs);
-    setFormData((prev) => ({ ...prev, hipRaiseAbs: "" }));
+  function confirmDeleteEntry() {
+    const updatedHistory = progressHistory.filter(
+      (_, index) => index !== entryToDelete
+    );
+    setProgressHistory(updatedHistory);
+    localStorage.setItem(
+      "sundayProgressHistory",
+      JSON.stringify(updatedHistory)
+    );
+    setShowModal(false);
+    setEntryToDelete(null);
   }
 
   return (
     <div className="weekday-component-container">
       <h1>Workhorse Wednesday!</h1>
       <h2>Legs, Glutes & Abs</h2>
+      <InterestingThings />
 
       <div className="exercise-container">
         <div className="exercise-content-container">
@@ -100,40 +139,25 @@ const Wednesday = () => {
             <label htmlFor="lungeWeights">Weights:</label>
             <input
               type="text"
-              placeholder="ex. 8kgs"
+              placeholder="ex. 5kg"
               name="lungeWeights"
-              value={formData.lungeWeights}
+              value={inputData.lungeWeights}
               onChange={handleChange}
               id="lungeWeights"
             />
           </div>
 
-          <button
-            type="button"
-            onClick={handleLungeWeights}
-            className="save-to-progress-history-button"
-          >
-            Save to Progress History
-          </button>
-
           <div className="input-btn-container">
             <label html="lungeReps">Reps:</label>
             <input
               type="text"
-              placeholder="ex. 2 sets of 10"
+              placeholder="ex. 1 set of 20"
               name="lungeReps"
-              value={formData.lungeReps}
+              value={inputData.lungeReps}
               onChange={handleChange}
               id="lungeReps"
             />
           </div>
-          <button
-            className="save-to-progress-history-button"
-            type="button"
-            onClick={handleLungeReps}
-          >
-            Save to Progress History
-          </button>
         </div>
 
         <img
@@ -156,39 +180,25 @@ const Wednesday = () => {
             <label htmlFor="squatWeights">Weights:</label>
             <input
               type="text"
-              placeholder="ex. 8kg"
+              placeholder="ex. 5kg"
               name="squatWeights"
-              value={formData.squatWeights}
+              value={inputData.squatWeights}
               onChange={handleChange}
               id="squatWeights"
             />
           </div>
-          <button
-            className="save-to-progress-history-button"
-            type="button"
-            onClick={handleSquatWeights}
-          >
-            Save to Progress History
-          </button>
 
           <div className="input-btn-container">
             <label htmlFor="squatReps">Reps:</label>
             <input
               type="text"
-              placeholder="ex. 10, 6 hold for 6, 8"
+              placeholder="ex. 10, 6 hold for 6, 8, 6 hold for 6, 6"
               name="squatReps"
-              value={formData.squatReps}
+              value={inputData.squatReps}
               onChange={handleChange}
               id="squatReps"
             />
           </div>
-          <button
-            className="save-to-progress-history-button"
-            type="button"
-            onClick={handleSquatReps}
-          >
-            Save to Progress History
-          </button>
         </div>
         <img
           className="exercise-img"
@@ -209,20 +219,13 @@ const Wednesday = () => {
             <label htmlFor="jkAbs">Reps:</label>
             <input
               type="text"
-              placeholder="ex. 3 sets of 10"
+              placeholder="ex. 1 set of 10"
               name="jkAbs"
-              value={formData.jkAbs}
+              value={inputData.jkAbs}
               onChange={handleChange}
               id="jkAbs"
             />
           </div>
-          <button
-            className="save-to-progress-history-button"
-            type="button"
-            onClick={handleJkAbs}
-          >
-            Save to Progress History
-          </button>
         </div>
         <img
           className="exercise-img"
@@ -244,20 +247,13 @@ const Wednesday = () => {
             <label htmlFor="vupAbs">Reps:</label>
             <input
               type="text"
-              placeholder="ex. 3 sets of 10"
+              placeholder="ex. 1 set of 10"
               name="vupAbs"
-              value={formData.vupAbs}
+              value={inputData.vupAbs}
               onChange={handleChange}
               id="vupAbs"
             />
           </div>
-          <button
-            className="save-to-progress-history-button"
-            type="button"
-            onClick={handleVupAbs}
-          >
-            Save to Progress History
-          </button>
         </div>
         <img
           className="exercise-img"
@@ -280,9 +276,9 @@ const Wednesday = () => {
             <label htmlFor="hipRaiseAbs">Reps:</label>
             <input
               type="text"
-              placeholder="ex. 3 sets of 10"
+              placeholder="ex. 1 set of 10"
               name="hipRaiseAbs"
-              value={formData.hipRaiseAbs}
+              value={inputData.hipRaiseAbs}
               onChange={handleChange}
               id="hipRaiseAbs"
             />
@@ -290,7 +286,7 @@ const Wednesday = () => {
           <button
             className="save-to-progress-history-button"
             type="button"
-            onClick={handleHipRaiseAbs}
+            onClick={handleSaveToProgressHistory}
           >
             Save to Progress History
           </button>
@@ -301,9 +297,49 @@ const Wednesday = () => {
           alt="person performing the inclinde straight-let hip-raise which shows which muscles are being used"
         />
       </div>
-      <button className="check-progress-history-button">
+      <button
+        className="check-progress-history-button"
+        onClick={handleCheckProgressHistory}
+      >
         Check Progress History
       </button>
+
+      {showHistory && progressHistory.length > 0 && (
+        <div className="progress-history">
+          <h3>Progress History</h3>
+          <ul>
+            {progressHistory.map((entry, index) => (
+              <li key={index}>
+                <div className="progress-history-list-item">
+                  <p>{entry.exercise}</p>
+                  <p>{entry.value}</p>
+                  <p>{entry.date}</p>
+                  <TbTrashXFilled
+                    className="trash-icon"
+                    onClick={() => {
+                      setEntryToDelete(index);
+                      setShowModal(true);
+                    }}
+                    title="Delete entry"
+                  />
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {showModal && (
+        <ConfirmDeleteModal
+          isOpen={showModal}
+          message="Are you sure you want to delete this entry?"
+          onConfirm={confirmDeleteEntry}
+          onCancel={() => {
+            setShowModal(false);
+            setEntryToDelete(null);
+          }}
+        />
+      )}
     </div>
   );
 };
