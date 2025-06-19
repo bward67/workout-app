@@ -14,6 +14,8 @@ import Footer from "./components/Footer";
 const App = () => {
   const [selectedDay, setSelectedDay] = useState("");
 
+  //console.log(data);
+
   function handleClick(e) {
     //console.log(e.target.textContent);
     const day = e.target.textContent;

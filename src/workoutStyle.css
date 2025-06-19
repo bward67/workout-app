@@ -26,6 +26,7 @@ html {
   text-align: center;
   height: 100%;
   width: 100%;
+  font-family: "Josefin Sans", sans-serif;
   /* display: flex;
   flex-direction: column; */
   /* align-items: center; */
@@ -74,6 +75,9 @@ h5 {
 }
 h6 {
   padding-top: -25px;
+}
+small {
+  color: var(--var--color-grey-medium-p);
 }
 img {
   max-width: 100%;
@@ -255,6 +259,41 @@ button:hover {
   padding: 0.5rem 1rem;
   width: 100vw;
   /* margin-left: calc(-50vw + 50%); */
+}
+.recipe-idea {
+  background-color: var(--var--color-main);
+}
+.healthy-recipe-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.healthy-recipe-content {
+  background-color: var(--var--color-white);
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.recipe-ingredients {
+  margin-top: 1rem;
+  text-align: left;
+  color: var(--var--color-grey-medium-p);
+}
+.close-modal {
+  cursor: pointer;
+  color: var(--var--color-grey-headings);
+  font-size: 1.5rem;
+  align-self: flex-end;
 }
 
 @keyframes growAndShrink {

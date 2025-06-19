@@ -283,6 +283,7 @@ const Sunday = () => {
           >
             Save to progress History
           </button>
+          <small>Only save if you have changes.</small>
         </div>
 
         <img

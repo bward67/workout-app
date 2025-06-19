@@ -228,6 +228,7 @@ const Friday = () => {
           >
             Save to Progress History
           </button>
+          <small>Only save if you have changes.</small>
         </div>
         <img
           className="exercise-img"

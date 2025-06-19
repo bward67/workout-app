@@ -1,5 +1,5 @@
 const data = [
-  "Approach each day with complete gusto!",
+  "Approach each day with every bit of gusto that you have!",
   "Only YOU have the power to change & sculpt your body! Let's get to it!",
   "Close your eyes & imagine yourself struttin' your stuff in your New Firm Fit Fabulous Body!",
   "Smile and the world smiles back at you!",

@@ -176,13 +176,6 @@ const Monday = () => {
               />
             </label>
           </div>
-          {/* <button
-            className="save-to-progress-history-button"
-            type="button"
-            onClick={handleSaveToProgressHistory}
-          >
-            Save to Progress History
-          </button> */}
 
           <div className="input-btn-container">
             <label>
@@ -203,6 +196,7 @@ const Monday = () => {
           >
             Save to progress History
           </button>
+          <small>Only save if you have changes.</small>
         </div>
         <img
           className="exercise-img"
