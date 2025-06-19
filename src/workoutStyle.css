@@ -264,6 +264,7 @@ button:hover {
 }
 .recipe-idea {
   background-color: var(--var--color-main);
+  border: solid 1px var(--var--color-white);
 }
 .healthy-recipe-modal {
   position: fixed;

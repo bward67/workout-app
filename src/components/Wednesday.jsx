@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import InterestingThings from "./InterestingThings";
 import { TbTrashXFilled } from "react-icons/tb";
 import ConfirmDeleteModal from "./ConfirmDeleteModal.jsx";
+import { formatDate } from "../utils/formatDate";
 
 const Wednesday = () => {
   const [inputData, setInputData] = useState({
@@ -45,14 +46,6 @@ const Wednesday = () => {
 
     setProgressHistory(savedHistory);
   }, []);
-
-  function formatDate(date) {
-    return new Date(date).toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    });
-  }
 
   function handleSaveToProgressHistory() {
     const timestamp = formatDate(new Date());

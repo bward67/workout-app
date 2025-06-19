@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import InterestingThings from "./InterestingThings";
 import { TbTrashXFilled } from "react-icons/tb";
 import ConfirmDeleteModal from "./ConfirmDeleteModal.jsx";
+import { formatDate } from "../utils/formatDate";
 
 const Sunday = () => {
   const [inputData, setInputData] = useState({
@@ -46,13 +47,6 @@ const Sunday = () => {
     setProgressHistory(savedHistory);
   }, []);
 
-  function formatDate(date) {
-    return new Date(date).toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    });
-  }
   //! I want the user to click on the Check Progress btn and have a pop up which shows what dates they changed/input weights and reps for a certain exercise
   //? we can get the timestamp of when the user clicked the button and save it to localStorage - which we can then retrieve later
 

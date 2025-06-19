@@ -3,6 +3,7 @@ import "../workoutStyle.css";
 import InterestingThings from "./InterestingThings.jsx";
 import { TbTrashXFilled } from "react-icons/tb";
 import ConfirmDeleteModal from "./ConfirmDeleteModal.jsx";
+import { formatDate } from "../utils/formatDate";
 
 const Monday = () => {
   const [inputData, setInputData] = useState({
@@ -31,15 +32,6 @@ const Monday = () => {
     });
   }
 
-  //! I will move this to a utility function outside of this component later
-  function formatDate(date) {
-    return new Date(date).toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    });
-  }
-
   useEffect(() => {
     const savedLSdata = JSON.parse(localStorage.getItem("mondayData")) || {
       chestWeights: "",
@@ -47,7 +39,7 @@ const Monday = () => {
       backWeights: "",
       backReps: "",
     };
-    console.log("Saved LocalStorage data", savedLSdata);
+    //console.log("Saved LocalStorage data", savedLSdata);
     setInputData(savedLSdata);
 
     const savedHistory =
