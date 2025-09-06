@@ -4,6 +4,8 @@ import InterestingThings from "./InterestingThings";
 import { TbTrashXFilled } from "react-icons/tb";
 import ConfirmDeleteModal from "./ConfirmDeleteModal.jsx";
 import { formatDate } from "../utils/formatDate";
+import flyes from "../images/dumbell-flyes.png";
+import reverseFlyes from "../images/reverse-dumbell-flyes.png";
 
 const Thursday = () => {
   const [inputData, setInputData] = useState({
@@ -125,7 +127,7 @@ const Thursday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2016/11/dumbbell-fly-resized.png"
+          src={flyes}
           alt="person performing the dumbbell fly which shows which muscles are being used"
         />
       </div>
@@ -173,7 +175,7 @@ const Thursday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://weighttraining.guide/wp-content/uploads/2016/05/Dumbbell-Rear-Lateral-Raise-resized.png"
+          src={reverseFlyes}
           alt="person performing the bent-over dumbbell reverse fly which shows which muscles are being used"
         />
       </div>

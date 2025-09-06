@@ -3,6 +3,9 @@ import InterestingThings from "./InterestingThings";
 import { TbTrashXFilled } from "react-icons/tb";
 import ConfirmDeleteModal from "./ConfirmDeleteModal.jsx";
 import { formatDate } from "../utils/formatDate";
+import bicepCurls from "../images/bicep-alternate-seated.png";
+import triSkullcrusher from "../images/triceps-skull-crusher.png";
+import uprightRow from "../images/shoulder-upright-row.png";
 
 const Friday = () => {
   const [inputData, setInputData] = useState({
@@ -139,7 +142,7 @@ const Friday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2021/09/Seated-Alternating-dumbbell-Curl.png"
+          src={bicepCurls}
           alt="person performing the seated alternating dumbbell curl which shows which muscles are being used"
         />
       </div>
@@ -179,7 +182,7 @@ const Friday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2022/05/Lying-alternating-dumbbell-triceps-extension.png"
+          src={triSkullcrusher}
           alt="person performing the lying alternating dumbell triceps extension which shows which muscles are being used"
         />
       </div>
@@ -225,7 +228,7 @@ const Friday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2019/03/Dumbbell-wide-grip-upright-row-resized.png"
+          src={uprightRow}
           alt="person performing the dumbbell wide-grip upright row which shows which muscles are being used"
         />
       </div>

@@ -4,6 +4,8 @@ import InterestingThings from "./InterestingThings.jsx";
 import { TbTrashXFilled } from "react-icons/tb";
 import ConfirmDeleteModal from "./ConfirmDeleteModal.jsx";
 import { formatDate } from "../utils/formatDate";
+import benchPress from "../images/bench-press.png";
+import bentoverRow from "../images/bent-over-row-together.png";
 
 const Monday = () => {
   const [inputData, setInputData] = useState({
@@ -138,7 +140,7 @@ const Monday = () => {
 
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2016/05/Dumbbell-Bench-Press-resized.png"
+          src={benchPress}
           alt="person performing the dumbbell bench press which shows which muscles are being used"
         />
       </div>
@@ -192,7 +194,7 @@ const Monday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2016/10/bent-over-one-arm-dumbbell-row-resized.png"
+          src={bentoverRow}
           alt="person performing the bent over one arm dumbbell row which shows which muscles are being used"
         />
       </div>

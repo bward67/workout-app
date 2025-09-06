@@ -3,6 +3,11 @@ import InterestingThings from "./InterestingThings";
 import { TbTrashXFilled } from "react-icons/tb";
 import ConfirmDeleteModal from "./ConfirmDeleteModal.jsx";
 import { formatDate } from "../utils/formatDate";
+import lunges from "../images/lunges.png";
+import squats from "../images/squats.png";
+import jackKnifes from "../images/jack-knife-situps.png";
+import legRaise from "../images/ab-leg-raise.png";
+import obliqueVups from "../images/oblique-v-ups.png";
 
 const Wednesday = () => {
   const [inputData, setInputData] = useState({
@@ -155,7 +160,7 @@ const Wednesday = () => {
 
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2018/11/Lunge-resized.png"
+          src={lunges}
           alt="person performing the lunge which shows which muscles are being used"
         />
       </div>
@@ -195,7 +200,7 @@ const Wednesday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2016/12/dumbbell-squat-resized-FIXED.png"
+          src={squats}
           alt="person performing the dumbbell squat which shows which muscles are being used"
         />
       </div>
@@ -222,7 +227,7 @@ const Wednesday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2021/09/Jackknife-sit-up.png"
+          src={jackKnifes}
           alt="person performing the jackknife sit-up which shows which muscles are being used"
         />
       </div>
@@ -250,7 +255,7 @@ const Wednesday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2018/08/bent-knee-oblique-v-up-resized.png"
+          src={obliqueVups}
           alt="person performing the bent-knee oblique v-up which shows which muscles are being used"
         />
       </div>
@@ -287,7 +292,7 @@ const Wednesday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2016/05/incline-straight-leg-hip-raise-resized.png"
+          src={legRaise}
           alt="person performing the inclinde straight-let hip-raise which shows which muscles are being used"
         />
       </div>

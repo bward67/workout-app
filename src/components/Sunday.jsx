@@ -3,6 +3,11 @@ import InterestingThings from "./InterestingThings";
 import { TbTrashXFilled } from "react-icons/tb";
 import ConfirmDeleteModal from "./ConfirmDeleteModal.jsx";
 import { formatDate } from "../utils/formatDate";
+import bulgSquats from "../images/bulgarian-split-squats.png";
+import squats from "../images/squats.png";
+import longArmCrunch from "../images/long-arm-crunch.png";
+import kneeTuck from "../images/alternating-knee-tuck.png";
+import scissorKick from "../images/cross-scissor-kick.png";
 
 const Sunday = () => {
   const [inputData, setInputData] = useState({
@@ -157,7 +162,7 @@ const Sunday = () => {
 
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2021/10/Bulgarian-split-squat.png"
+          src={bulgSquats}
           alt="person performing the bulgarian split squat which shows which muscles are being used"
         />
       </div>
@@ -166,11 +171,12 @@ const Sunday = () => {
         <div className="exercise-content-container">
           <h3>
             Legs & Glutes:
-            <span>Hip Thrust</span>
+            <span>Squats</span>
           </h3>
           <p>
-            You can take a heavy weight with this exercise. Get your back
-            comfortable on the bench and push up through your heels.
+            Sit back as if you are going to sit in a chair. Keep your knees
+            inline with your ankles. Push up through your heels. Feel it in your
+            bum.
           </p>
 
           <div className="input-btn-container">
@@ -199,7 +205,7 @@ const Sunday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2017/04/barbell-hip-thrust-resized.png"
+          src={squats}
           alt="person performing the barbell hip thrust which shows which muscles are being used"
         />
       </div>
@@ -224,7 +230,7 @@ const Sunday = () => {
 
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2022/07/Long-arm-crunch.png"
+          src={longArmCrunch}
           alt="person performing the long arm crunch which shows which muscles are being used"
         />
       </div>
@@ -249,7 +255,7 @@ const Sunday = () => {
 
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2022/06/Seated-alternating-knee-tuck.png"
+          src={kneeTuck}
           alt="person performing the setaed alternating knee tuck which shows which muscles are being used"
         />
       </div>
@@ -282,7 +288,7 @@ const Sunday = () => {
 
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2022/05/Seated-cross-scissor-kick.png"
+          src={scissorKick}
           alt="person performing the seated cross-scissor kick which shows which muscles are being used"
         />
       </div>

@@ -3,6 +3,11 @@ import InterestingThings from "./InterestingThings";
 import { TbTrashXFilled } from "react-icons/tb";
 import ConfirmDeleteModal from "./ConfirmDeleteModal.jsx";
 import { formatDate } from "../utils/formatDate";
+import concCurls from "../images/bicep-concentration-curl.png";
+import triKickbacks from "../images/triceps-kickback.png";
+import shoulderLateralRaise from "../images/shoulder-lateral-raise.png";
+import shoulderFrontRaise from "../images/shoulder-front-raise.png";
+import arnoldPress from "../images/Arnold-press.png";
 
 const Tuesday = () => {
   const [inputData, setInputData] = useState({
@@ -174,7 +179,7 @@ const Tuesday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2016/05/Dumbbell-Concentration-Curl-resized.png"
+          src={concCurls}
           alt="person performing the concentration dumbbell curl which shows which muscles are being used"
         />
       </div>
@@ -215,7 +220,7 @@ const Tuesday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2016/05/Dumbbell-Kickback-resized.png"
+          src={triKickbacks}
           alt="person performing the dumbbell kickback which shows which muscles are being used"
         />
       </div>
@@ -255,7 +260,7 @@ const Tuesday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2016/05/dumbbell-lateral-raise-resized.png"
+          src={shoulderLateralRaise}
           alt="person performing the dumbbell lateral raise which shows which muscles are being used"
         />
       </div>
@@ -296,7 +301,7 @@ const Tuesday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2017/08/Seated-Dumbbell-Front-Raise-resized.png"
+          src={shoulderFrontRaise}
           alt="person performing the seated dumbbell front raise which shows which muscles are being used"
         />
       </div>
@@ -345,7 +350,7 @@ const Tuesday = () => {
         </div>
         <img
           className="exercise-img"
-          src="https://cdn-0.weighttraining.guide/wp-content/uploads/2016/10/Arnold-press-resized.png"
+          src={arnoldPress}
           alt="person performing the Arnold press exercise which shows which muscles are being used"
         />
       </div>
