@@ -5,7 +5,7 @@ import { TbTrashXFilled } from "react-icons/tb";
 import ConfirmDeleteModal from "./ConfirmDeleteModal.jsx";
 import { formatDate } from "../utils/formatDate";
 import benchPress from "../images/bench-press.png";
-import bentoverRow from "../images/bent-over-row-together.png";
+import bentoverRow from "../images/BentOverRowAlternate.png";
 
 const Monday = () => {
   const [inputData, setInputData] = useState({
